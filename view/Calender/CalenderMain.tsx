@@ -1,4 +1,4 @@
-"use-client";
+"use client";
 
 import DashboardWrap from "@/section/Dashboard/DashboardWrap";
 import React from "react";
