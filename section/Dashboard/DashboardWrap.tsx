@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import SidebarComponent from "../Sidebar/Sidebar";
 
 interface DashboardWrapProps {
@@ -12,10 +12,12 @@ const DashboardWrap = ({
   currentTab,
 }: React.PropsWithChildren<DashboardWrapProps>): React.JSX.Element => {
   return (
-    <div className="h-screen flex">
-      <SidebarComponent currentTab={currentTab} />
-      <div className="h-full w-full dashboard-children">{children}</div>
-    </div>
+    <Suspense>
+      <div className="h-screen flex">
+        <SidebarComponent currentTab={currentTab} />
+        <div className="h-full w-full dashboard-children">{children}</div>
+      </div>
+    </Suspense>
   );
 };
 

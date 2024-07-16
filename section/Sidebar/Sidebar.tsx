@@ -1,7 +1,7 @@
 "use client";
 
 import { CustomFlowbiteTheme, Sidebar } from "flowbite-react";
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState } from "react";
 import ToggleButton from "./components/ToggleButton";
 import { sideBarItems } from "@/utils/constant";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -38,48 +38,46 @@ const SidebarComponent = ({
   }, []);
 
   return (
-    <Suspense>
-      <Sidebar collapsed={isCollapsed} theme={customSideBarTheme}>
-        <ToggleButton isCollapsed={isCollapsed} toggleSidebar={toggleSidebar} />
-        <Sidebar.Items>
-          <Sidebar.ItemGroup>
-            {sideBarItems.map((sidebarItem) =>
-              sidebarItem.subItems ? (
-                <Sidebar.Collapse
-                  icon={sidebarItem.icon}
-                  label={sidebarItem.name}
-                  key={sidebarItem.id}
-                  open={expandedItem === sidebarItem.id}
-                >
-                  {Array.isArray(sidebarItem.subItems) &&
-                    sidebarItem.subItems.map((subItem) => (
-                      <Sidebar.Item
-                        key={subItem.id}
-                        icon={subItem.icon}
-                        active={currentTab === subItem.id}
-                        onClick={() =>
-                          router.push(subItem.ref + `?expand=${sidebarItem.id}`)
-                        }
-                      >
-                        {subItem.name}
-                      </Sidebar.Item>
-                    ))}
-                </Sidebar.Collapse>
-              ) : (
-                <Sidebar.Item
-                  key={sidebarItem.id}
-                  icon={sidebarItem.icon}
-                  active={currentTab === sidebarItem.id}
-                  onClick={() => router.push(sidebarItem.ref)}
-                >
-                  {sidebarItem.name}
-                </Sidebar.Item>
-              )
-            )}
-          </Sidebar.ItemGroup>
-        </Sidebar.Items>
-      </Sidebar>
-    </Suspense>
+    <Sidebar collapsed={isCollapsed} theme={customSideBarTheme}>
+      <ToggleButton isCollapsed={isCollapsed} toggleSidebar={toggleSidebar} />
+      <Sidebar.Items>
+        <Sidebar.ItemGroup>
+          {sideBarItems.map((sidebarItem) =>
+            sidebarItem.subItems ? (
+              <Sidebar.Collapse
+                icon={sidebarItem.icon}
+                label={sidebarItem.name}
+                key={sidebarItem.id}
+                open={expandedItem === sidebarItem.id}
+              >
+                {Array.isArray(sidebarItem.subItems) &&
+                  sidebarItem.subItems.map((subItem) => (
+                    <Sidebar.Item
+                      key={subItem.id}
+                      icon={subItem.icon}
+                      active={currentTab === subItem.id}
+                      onClick={() =>
+                        router.push(subItem.ref + `?expand=${sidebarItem.id}`)
+                      }
+                    >
+                      {subItem.name}
+                    </Sidebar.Item>
+                  ))}
+              </Sidebar.Collapse>
+            ) : (
+              <Sidebar.Item
+                key={sidebarItem.id}
+                icon={sidebarItem.icon}
+                active={currentTab === sidebarItem.id}
+                onClick={() => router.push(sidebarItem.ref)}
+              >
+                {sidebarItem.name}
+              </Sidebar.Item>
+            )
+          )}
+        </Sidebar.ItemGroup>
+      </Sidebar.Items>
+    </Sidebar>
   );
 };
 
