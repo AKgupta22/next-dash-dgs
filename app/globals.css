@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dashboard-children {
+    padding: 2rem;
+}
+
+@layer utilities {}
