@@ -4,8 +4,18 @@ import React from "react";
 import { Table } from "flowbite-react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/rootReducer";
+import { MdEdit, MdDelete } from "react-icons/md";
+import { workOrderStateType } from "@/redux/slices/workOrderSlice";
 
-const WorkOrderTable = (): React.JSX.Element => {
+interface WorkOrderTableProps {
+  handleEditData: (arg0: workOrderStateType) => void;
+  handleDeleteData: (arg0: string) => void;
+}
+
+const WorkOrderTable = ({
+  handleEditData,
+  handleDeleteData,
+}: WorkOrderTableProps): React.JSX.Element => {
   const workOrderData = useSelector((state: RootState) => state.workOrder);
 
   return (
@@ -23,7 +33,10 @@ const WorkOrderTable = (): React.JSX.Element => {
         </Table.Head>
         <Table.Body className="divide-y">
           {workOrderData.map((orderData) => (
-            <Table.Row key={orderData.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+            <Table.Row
+              key={orderData.id}
+              className="bg-white dark:border-gray-700 dark:bg-gray-800"
+            >
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                 {orderData.product_name}
               </Table.Cell>
@@ -32,9 +45,14 @@ const WorkOrderTable = (): React.JSX.Element => {
               <Table.Cell>{orderData.price} &#8377;</Table.Cell>
               <Table.Cell>{orderData.order_date}</Table.Cell>
               <Table.Cell>
-                <p className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                  Action
-                </p>
+                <div className="flex gap-2">
+                  <button onClick={() => handleEditData(orderData)}>
+                    <MdEdit color="green" size={18} />
+                  </button>
+                  <button onClick={() => handleDeleteData(orderData.id)}>
+                    <MdDelete color="red" size={18} />
+                  </button>
+                </div>
               </Table.Cell>
             </Table.Row>
           ))}

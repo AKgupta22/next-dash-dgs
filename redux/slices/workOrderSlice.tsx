@@ -18,9 +18,21 @@ const workOrderSlice = createSlice({
     addWorkOrder(state, action) {
       state.push(action.payload);
     },
+    updateWorkOrder(state, action) {
+      const { id } = action.payload;
+      const itemIndex = state.findIndex((item) => item.id === id);
+      if (itemIndex !== -1) {
+        state[itemIndex] = { ...action.payload };
+      }
+    },
+    deleteWorkOrder(state, action) {
+      const id = action.payload;
+      return state.filter((item) => item.id !== id);
+    },
   },
 });
 
-export const { addWorkOrder } = workOrderSlice.actions;
+export const { addWorkOrder, updateWorkOrder, deleteWorkOrder } =
+  workOrderSlice.actions;
 
 export default workOrderSlice.reducer;

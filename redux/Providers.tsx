@@ -2,10 +2,15 @@
 
 import React from "react";
 import { Provider } from "react-redux";
-import store from "./store";
+import store, { persistor } from "./store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const Providers = ({ children }: React.PropsWithChildren) => (
-  <Provider store={store}>{children}</Provider>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      {children}
+    </PersistGate>
+  </Provider>
 );
 
 export default Providers;
