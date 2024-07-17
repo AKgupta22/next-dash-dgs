@@ -10,7 +10,7 @@ interface WorkOrderFormProps {
 }
 
 const WorkOrderForm = ({ formik }: WorkOrderFormProps) => {
-  const { handleChange, setFieldValue, errors, values, touched } = formik;
+  const { handleChange, errors, values, touched } = formik;
 
  return (
     <div className="flex max-w-md flex-col gap-4">
