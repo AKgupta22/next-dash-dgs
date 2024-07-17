@@ -10,6 +10,7 @@ interface CommonModalProps {
   color: string;
   submitHandler: () => void;
   submitTitle: string;
+  clearForm: () => void | null;
 }
 
 const CommonModal = ({
@@ -20,13 +21,23 @@ const CommonModal = ({
   submitHandler,
   submitTitle,
   children,
+  clearForm,
 }: React.PropsWithChildren<CommonModalProps>): React.JSX.Element => {
   const handleSubmitModal = () => {
     submitHandler();
   };
 
   return (
-    <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
+    <Modal
+      dismissible
+      show={openModal}
+      onClose={() => {
+        setOpenModal(false);
+        if (clearForm) {
+          clearForm();
+        }
+      }}
+    >
       <Modal.Header>{heading}</Modal.Header>
       <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>
@@ -36,7 +47,15 @@ const CommonModal = ({
         >
           {submitTitle}
         </Button>
-        <Button color="gray" onClick={() => setOpenModal(false)}>
+        <Button
+          color="gray"
+          onClick={() => {
+            setOpenModal(false);
+            if (clearForm) {
+              clearForm();
+            }
+          }}
+        >
           Cancel
         </Button>
       </Modal.Footer>

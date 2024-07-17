@@ -10,12 +10,16 @@ import CommonModal from "@/components/CommonModal";
 import WorkOrderForm from "./components/WorkOrderForm";
 import { useFormik } from "formik";
 import { workOrderFormValidationSchema } from "@/utils/constant";
+import { dispatch } from "@/redux/store";
+import { addWorkOrder } from "@/redux/slices/workOrderSlice";
+import { v4 as uuidv4 } from "uuid";
 
 const WorkOrder = (): React.JSX.Element => {
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const formik = useFormik({
     initialValues: {
+      id: uuidv4(),
       product_name: "",
       customer_name: "",
       city: "",
@@ -23,7 +27,11 @@ const WorkOrder = (): React.JSX.Element => {
       order_date: "",
     },
     validationSchema: workOrderFormValidationSchema,
-    onSubmit: (values) => {},
+    onSubmit: (values, { resetForm }) => {
+      dispatch(addWorkOrder(values));
+      resetForm();
+      setOpenModal(false);
+    },
   });
 
   return (
@@ -48,8 +56,9 @@ const WorkOrder = (): React.JSX.Element => {
           color="success"
           submitHandler={formik.handleSubmit}
           submitTitle="Add"
+          clearForm={formik.resetForm}
         >
-          <WorkOrderForm formik={formik}/>
+          <WorkOrderForm formik={formik} />
         </CommonModal>
       ) : null}
     </>

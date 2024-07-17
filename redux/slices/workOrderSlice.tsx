@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface workOrderStateType {
+  id: string;
   product_name: string;
   customer_name: string;
   city: string;
@@ -15,7 +16,7 @@ const workOrderSlice = createSlice({
   initialState: initialState,
   reducers: {
     addWorkOrder(state, action) {
-      // perform action
+      state.push(action.payload);
     },
   },
 });
