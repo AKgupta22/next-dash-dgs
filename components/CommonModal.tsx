@@ -23,7 +23,6 @@ const CommonModal = ({
 }: React.PropsWithChildren<CommonModalProps>): React.JSX.Element => {
   const handleSubmitModal = () => {
     submitHandler();
-    setOpenModal(false);
   };
 
   return (

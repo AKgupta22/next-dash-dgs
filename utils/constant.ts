@@ -6,6 +6,7 @@ import {
 import { FaCalendarAlt, FaReact, FaBusinessTime } from "react-icons/fa";
 import { HiMiniCube } from "react-icons/hi2"
 import { PiClockAfternoonBold } from "react-icons/pi";
+import * as yup from 'yup'
 
 export const sideBarItems = [
     {
@@ -63,3 +64,24 @@ export const sideBarItems = [
         ]
     },
 ]
+
+export const workOrderFormValidationSchema = yup.object({
+    product_name: yup.string()
+        .required('Product name is required')
+        .min(3, 'Min 3 character is required')
+    ,
+    customer_name: yup.string()
+        .required('Customer name is required')
+        .min(3, 'Min 3 character is required')
+    ,
+    city: yup.string()
+        .required('City name is required')
+        .min(3, 'Min 3 character is required')
+    ,
+    price: yup.string()
+        .required('Price is required')
+        .matches(/^(?:[0-9]|[1-9][0-9]{0,3}|50000)$/, "Price must be between 0 and 50,000"),
+    order_date: yup.string()
+        .required('Order Date is required')
+})
+

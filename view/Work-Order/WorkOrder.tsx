@@ -7,9 +7,24 @@ import CommonContentHeader from "@/components/CommonContentHeader";
 import { Button } from "flowbite-react";
 import { IoAddOutline } from "react-icons/io5";
 import CommonModal from "@/components/CommonModal";
+import WorkOrderForm from "./components/WorkOrderForm";
+import { useFormik } from "formik";
+import { workOrderFormValidationSchema } from "@/utils/constant";
 
 const WorkOrder = (): React.JSX.Element => {
   const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const formik = useFormik({
+    initialValues: {
+      product_name: "",
+      customer_name: "",
+      city: "",
+      price: "",
+      order_date: "",
+    },
+    validationSchema: workOrderFormValidationSchema,
+    onSubmit: (values) => {},
+  });
 
   return (
     <>
@@ -31,10 +46,10 @@ const WorkOrder = (): React.JSX.Element => {
           setOpenModal={setOpenModal}
           heading="Add Work Order"
           color="success"
-          submitHandler={() => {}}
+          submitHandler={formik.handleSubmit}
           submitTitle="Add"
         >
-          <div>form</div>
+          <WorkOrderForm formik={formik}/>
         </CommonModal>
       ) : null}
     </>
