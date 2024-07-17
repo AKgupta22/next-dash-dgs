@@ -4,7 +4,7 @@ import React from "react";
 
 export interface eventType {
   event_type: string;
-  event_title: string;
+  title: string;
 }
 
 interface AddEventFormProps {
@@ -27,12 +27,12 @@ const AddEventForm = ({ formik }: AddEventFormProps) => {
       />
       <p className="mb-2 text-xs">Type E for event or R for reminder</p>
       <CommonInputWithError
-        value={values.event_title}
+        value={values.title}
         changeHandler={handleChange}
-        touched={touched.event_title}
-        errorText={errors.event_title}
+        touched={touched.title}
+        errorText={errors.title}
         label="Event Title"
-        name="event_title"
+        name="title"
         type={null}
       />
     </div>

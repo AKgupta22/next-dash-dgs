@@ -7,6 +7,10 @@ import CommonModal from "@/components/CommonModal";
 import AddEventForm from "./AddEventForm";
 import { useFormik } from "formik";
 import { addEventFormValidationSchema } from "@/utils/constant";
+import { dispatch } from "@/redux/store";
+import { addEvent, eventStateType } from "@/redux/slices/eventSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/rootReducer";
 
 const localizer = momentLocalizer(moment);
 
@@ -14,6 +18,7 @@ const CalenderGrid = (): React.JSX.Element => {
   const [date, setDate] = useState(new Date());
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedSlot, setSelectedSlot] = useState<SlotInfo | null>(null);
+  const calenderData = useSelector((state: RootState) => state.events);
 
   const handleSelectSlot = (slotInfo: SlotInfo) => {
     setSelectedSlot(slotInfo);
@@ -25,10 +30,13 @@ const CalenderGrid = (): React.JSX.Element => {
     formik.resetForm();
   };
 
-  const eventPropGetter = () => {
+  const eventPropGetter = (event: eventStateType) => {
+    let backgroundColor = "#ff9900";
+    if ((event.event_type === "R")) backgroundColor = "#ff0000";
+
     return {
       style: {
-        cursor: "pointer",
+        backgroundColor,
       },
     };
   };
@@ -36,11 +44,18 @@ const CalenderGrid = (): React.JSX.Element => {
   const formik = useFormik({
     initialValues: {
       event_type: "E",
-      event_title: "",
+      title: "",
     },
     validationSchema: addEventFormValidationSchema,
     onSubmit: (values) => {
+      const paylaod = {
+        start: selectedSlot?.start,
+        end: selectedSlot?.end,
+        ...values,
+      };
+      dispatch(addEvent(paylaod));
       handleClearSlot();
+      setOpenModal(false);
     },
   });
 
@@ -49,7 +64,7 @@ const CalenderGrid = (): React.JSX.Element => {
       <div>
         <Calendar
           localizer={localizer}
-          events={[]}
+          events={calenderData}
           startAccessor="start"
           endAccessor="end"
           style={{ height: 500 }}
