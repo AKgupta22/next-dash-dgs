@@ -85,3 +85,12 @@ export const workOrderFormValidationSchema = yup.object({
         .required('Order Date is required')
 })
 
+export const addEventFormValidationSchema = yup.object({
+    event_type: yup.string()
+        .required('Event or Reminder type is required').
+        oneOf(['E', 'R'], 'Please enter E for event or R for reminder')
+    ,
+    event_title: yup.string()
+        .required('Event or Reminder title is required')
+        .min(3, 'Min 3 character is required')
+})

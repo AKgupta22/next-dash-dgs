@@ -1,7 +1,5 @@
-"use client";
-
+import CommonInputWithError from "@/components/CommonInputWithError";
 import { workOrderStateType } from "@/redux/slices/workOrderSlice";
-import { Label, TextInput } from "flowbite-react";
 import { FormikProps } from "formik";
 import React from "react";
 
@@ -12,97 +10,53 @@ interface WorkOrderFormProps {
 const WorkOrderForm = ({ formik }: WorkOrderFormProps) => {
   const { handleChange, errors, values, touched } = formik;
 
- return (
+  return (
     <div className="flex max-w-md flex-col gap-4">
-      <div>
-        <div className="mb-2 block">
-          <Label color="gray" value="Product Name" />
-        </div>
-        <TextInput
-          placeholder="Enter product name"
-          color="gray"
-          name="product_name"
-          value={values.product_name}
-          onChange={handleChange}
-          helperText={
-            touched.product_name && errors.product_name ? (
-              <p className="text-xs text-red-600">
-                {formik.errors.product_name}
-              </p>
-            ) : null
-          }
-        />
-      </div>
-      <div>
-        <div className="mb-2 block">
-          <Label color="gray" value="Customer Name" />
-        </div>
-        <TextInput
-          placeholder="Enter customer name"
-          color="gray"
-          name="customer_name"
-          value={values.customer_name}
-          onChange={handleChange}
-          helperText={
-            touched.customer_name && errors.customer_name ? (
-              <p className="text-xs text-red-600">
-                {formik.errors.customer_name}
-              </p>
-            ) : null
-          }
-        />
-      </div>
-      <div>
-        <div className="mb-2 block">
-          <Label color="gray" value="City" />
-        </div>
-        <TextInput
-          placeholder="Enter city"
-          color="gray"
-          name="city"
-          value={values.city}
-          onChange={handleChange}
-          helperText={
-            touched.city && errors.city ? (
-              <p className="text-xs text-red-600">{formik.errors.city}</p>
-            ) : null
-          }
-        />
-      </div>
-      <div>
-        <div className="mb-2 block">
-          <Label color="gray" value="Price" />
-        </div>
-        <TextInput
-          placeholder="Enter price"
-          color="gray"
-          name="price"
-          value={values.price}
-          onChange={handleChange}
-          helperText={
-            touched.price && errors.price ? (
-              <p className="text-xs text-red-600">{formik.errors.price}</p>
-            ) : null
-          }
-        />
-      </div>
-      <div>
-        <div className="mb-2 block">
-          <Label color="gray" value="Order Date" />
-        </div>
-        <TextInput
-          color="gray"
-          name="order_date"
-          type="date"
-          value={values.order_date}
-          onChange={formik.handleChange}
-          helperText={
-            touched.order_date && errors.order_date ? (
-              <p className="text-xs text-red-600">{formik.errors.order_date}</p>
-            ) : null
-          }
-        />
-      </div>
+      <CommonInputWithError
+        value={values.product_name}
+        changeHandler={handleChange}
+        touched={touched.product_name}
+        errorText={errors.product_name}
+        label="Product Name"
+        name="product_name"
+        type={null}
+      />
+      <CommonInputWithError
+        value={values.customer_name}
+        changeHandler={handleChange}
+        touched={touched.customer_name}
+        errorText={errors.customer_name}
+        label="Customer Name"
+        name="customer_name"
+        type={null}
+      />
+      <CommonInputWithError
+        value={values.city}
+        changeHandler={handleChange}
+        touched={touched.city}
+        errorText={errors.city}
+        label="City"
+        name="city"
+        type={null}
+      />
+      <CommonInputWithError
+        value={values.price}
+        changeHandler={handleChange}
+        touched={touched.price}
+        errorText={errors.price}
+        label="Price"
+        name="price"
+        type={null}
+      />
+      <CommonInputWithError
+        value={values.order_date}
+        changeHandler={handleChange}
+        touched={touched.order_date}
+        errorText={errors.order_date}
+        label="Order Date"
+        name="order_date"
+        type="date"
+      />
     </div>
   );
 };
